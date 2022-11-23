@@ -15,12 +15,20 @@ function App() {
   });
   const [cards, setCards] = useState(cardsInitialArray);
 
-  const clickCard = (cardId) => {};
+  const clickCard = (cardId) => {
+    // toggle the clicked status on the clicked card;
+    // if the card is already clicked, reset score, and reset game (use effect)
+    // if card is not already clicked, increase score by one, and set
+    // high score to max current score and prev high socre.
+
+    // After each click anyway, shuffle the cards.
+    console.log("Clicking card no ", cardId);
+  };
 
   return (
     <div className="App">
       <Header score="3" bestScore="5" />
-      <CardsContainer content={cards} />
+      <CardsContainer content={cards} clickCard={clickCard} />
     </div>
   );
 }

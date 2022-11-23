@@ -8,7 +8,7 @@ export default function CardsContainer(props) {
     <Card
       content={card.content}
       key={card.id}
-      handleClick={() => console.log("clicked ", card.content)}
+      handleClick={() => props.clickCard(card.id)}
     />
   ));
 

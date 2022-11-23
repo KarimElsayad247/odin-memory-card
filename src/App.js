@@ -22,7 +22,23 @@ function App() {
     // high score to max current score and prev high socre.
 
     // After each click anyway, shuffle the cards.
-    console.log("Clicking card no ", cardId);
+    setCards((prevCards) => {
+      const newCards = prevCards.map((card) => {
+        if (card.id === cardId) {
+          if (card.isClicked) {
+            // do mistake logic
+            console.log("Card already clicked");
+          } else {
+            // do score increase logic
+            console.log("newly clicked card");
+          }
+          return { ...card, isClicked: true };
+        }
+        return { ...card };
+      });
+      // shuffle new cards array
+      return newCards;
+    });
   };
 
   return (

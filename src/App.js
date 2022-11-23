@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import CardsContainer from "./components/CardsContainer";
 
@@ -14,6 +14,8 @@ function App() {
     };
   });
   const [cards, setCards] = useState(cardsInitialArray);
+  const [currentScore, setCurrentScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
 
   const clickCard = (cardId) => {
     // toggle the clicked status on the clicked card;
@@ -21,8 +23,11 @@ function App() {
     // if card is not already clicked, increase score by one, and set
     // high score to max current score and prev high socre.
 
+    console.log("Card clicked once");
+
     // After each click anyway, shuffle the cards.
     setCards((prevCards) => {
+      console.log("Inside set cards");
       const newCards = prevCards.map((card) => {
         if (card.id === cardId) {
           if (card.isClicked) {
@@ -32,6 +37,7 @@ function App() {
             // do score increase logic
             console.log("newly clicked card");
           }
+
           return { ...card, isClicked: true };
         }
         return { ...card };
@@ -41,9 +47,25 @@ function App() {
     });
   };
 
+  // Calculates the score based on the amount of currently
+  // currently clicked cards.
+  useEffect(() => {
+    setCurrentScore(
+      cards.reduce((sum, card) => {
+        return card.isClicked ? sum + 1 : sum;
+      }, 0)
+    );
+  }, [cards]);
+
+  // Sets the high score based on the values of current score and current high score.
+  // The new high score is the highest number of both.
+  useEffect(() => {
+    setHighScore((prevHighScore) => Math.max(prevHighScore, currentScore));
+  }, [currentScore]);
+
   return (
     <div className="App">
-      <Header score="3" bestScore="5" />
+      <Header score={currentScore} bestScore={highScore} />
       <CardsContainer content={cards} clickCard={clickCard} />
     </div>
   );

@@ -1,10 +1,16 @@
 import React from "react";
 import Card from "./Card";
 
-export default function CardsContainer() {
-  const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+export default function CardsContainer(props) {
+  const cards = props.content;
 
-  const cardElems = cards.map((card, i) => <Card number={card} key={i} />);
+  const cardElems = cards.map((card, i) => (
+    <Card
+      content={card.content}
+      key={card.id}
+      handleClick={() => console.log("clicked ", card.content)}
+    />
+  ));
 
   return <section className="cards">{cardElems}</section>;
 }
